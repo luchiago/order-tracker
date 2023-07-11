@@ -28,7 +28,11 @@ pysocks==1.7.1
     # via urllib3
 python-dotenv==1.0.0
     # via -r requirements.in
+pytz==2023.3
+    # via -r requirements.in
 requests==2.31.0
+    # via -r requirements.in
+schedule==1.2.0
     # via -r requirements.in
 selenium==4.10.0
     # via -r requirements.in
