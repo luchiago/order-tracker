@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 import logging
 
 from db.database import fetch_latest_status, insert_latest_status
+from mail import send_mail
 
 load_dotenv()
 
@@ -64,6 +65,8 @@ def extract_info() -> None:
 
     if latest_date != date or latest_status != status:
         logging.info(f'New status: {date} {status}')
+
+        send_mail(EMAIL, date, status)
 
         insert_latest_status((date, status))
     else:
