@@ -32,5 +32,5 @@ Using [Selenium with Python](https://selenium-python.readthedocs.io/), I want to
     - [x] Add model
     - [x] Integrate
 - [x] Send an email if there is any changes on the update
-- [ ] Schedule the running for at least two times in the day (e.g 10 AM and 6 PM)
-- [ ] Deploy the dockerized application
+- [x] Schedule the running for at least two times in the day (e.g 10 AM and 6 PM)
+- [x] Deploy the dockerized application
