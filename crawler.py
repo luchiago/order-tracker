@@ -7,6 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import logging
 
+from db.database import fetch_latest_status, insert_latest_status
+
 load_dotenv()
 
 ORDER_ID=os.getenv('ORDER_ID')
@@ -21,6 +23,8 @@ driver = webdriver.Firefox(options=options)
 
 def login() -> None:
     driver.get(LOGIN_URL)
+
+    sleep(2)
 
     email_input = driver.find_element(By.ID, 'input-email')
     password_input = driver.find_element(By.ID, 'input-password')
@@ -37,25 +41,33 @@ def login() -> None:
 
     logging.info(f'Login completed')
 
-    sleep(2)
 
 def extract_info() -> None:
     driver.get(ORDER_URL)
 
-    table_element = driver.find_element(
-        By.XPATH,
-        '/html/body/div[2]/div/div/div/div/table[3]/tbody',
-    )
+    sleep(2)
+
+    table_element = driver.find_elements(By.CLASS_NAME, 'table')[-1]
+    table_element = table_element.find_element(By.XPATH, './/tbody')
 
     rows = table_element.find_elements(By.XPATH, './/tr')
+    latest_row = rows[-1]
 
-    statuses = []
+    cells = latest_row.find_elements(By.XPATH, './/td')[:2]
+    date, status = [cell.text for cell in cells]
 
-    for row in rows:
-        cells = row.find_elements(By.XPATH, './/td')[:2]
-        status_and_date = [cell.text for cell in cells]
+    latest_date, latest_status = '', ''
+    latest = fetch_latest_status()
 
-        statuses.append(status_and_date)
+    if latest is not None:
+        latest_date, latest_status = latest
+
+    if latest_date != date or latest_status != status:
+        logging.info(f'New status: {date} {status}')
+
+        insert_latest_status((date, status))
+    else:
+        logging.info('No new updates')
 
     logging.info('Extraction completed')
 
