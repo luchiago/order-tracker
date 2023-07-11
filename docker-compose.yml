@@ -7,8 +7,16 @@ services:
       - .:/app/.
     environment:
       - IN_DOCKER=1
-    env_file:
-      - .env
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+      - ORDER_ID=${ORDER_ID}
+      - ORDER_URL=${ORDER_URL}
+      - LOGIN_URL=${LOGIN_URL}
+      - MAILGUN_URL=${MAILGUN_URL}
+      - MAILGUN_DOMAIN_NAME=${MAILGUN_DOMAIN_NAME}
+      - MAILGUN_API_KEY=${MAILGUN_API_KEY}
+      - EMAIL_FROM_USER_NAME=${EMAIL_FROM_USER_NAME}
+      - EMAIL_FROM_USER_EMAIL=${EMAIL_FROM_USER_EMAIL}
     depends_on:
       - selenium
 
