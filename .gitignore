@@ -32,6 +32,7 @@ MANIFEST
 
 db.sqlite3
 db.sqlite3-journal
+*.db
 
 __pypackages__/
 
