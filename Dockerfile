@@ -1,5 +1,8 @@
 FROM python:3.11-slim-buster
 
+ENV PYTHONUNBUFFERED=1
+ENV DISPLAY=:99
+
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
@@ -16,8 +19,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-
-ENV DISPLAY=:99
 
 EXPOSE 4444
 
