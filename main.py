@@ -37,7 +37,7 @@ def run_scheduled():
 
 logging.info('Starting the main script')
 
-if IN_DOCKER:
+if not IN_DOCKER:
     logging.info('Running on scheduled mode')
     run_scheduled()
 else:
